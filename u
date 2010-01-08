@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# Doing a dist-Upgrade as another user (e.g. root)
+#
+# Version: 1.0
+# Author: Reto Hugi (http://hugi.to/blog/)
+# License: GPL v3 (http://www.gnu.org/licenses/gpl.html)
+#
+# Dependencies:
+# - requires apt package manager
+#
+# Changelog:
+# 2006-05-06 / Version 1.0 / initial release
+
+su -c "apt-get dist-upgrade"
+

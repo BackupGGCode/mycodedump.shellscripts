@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# Shell script for an easy hg push to google-code (or any other hg repository
+# that requires authentication).
+#
+# Version: 0.1
+# Author: Reto Hugi (http://hugi.to/blog/)
+# License: GPL v3 (http://www.gnu.org/licenses/gpl.html)
+#
+# Dependencies:
+# This script requires:
+# - a working mercurial installation :)
+#
+# Changelog:
+# 2010-01-08 / Version 0.1 / initial release
+
+
+hg push https://username:pw@shellscripts.mycodedump.googlecode.com/hg/
