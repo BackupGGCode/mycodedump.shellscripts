@@ -1,5 +1,5 @@
 #!/bin/bash
-# Shell script to backup MySql databases
+# Shell script to backup MySql database
 # To backup Nysql databases file to /backup dir and later pick up by your
 # script. You can skip few databases from backup too.
 # For more info please see (Installation info):
@@ -14,11 +14,14 @@
 # Visit http://bash.cyberciti.biz/ for more information.
 # -------------------------------------------------------------------------
  
-MyUSER="root"     # USERNAME
+MyUSER="mysqluser"     # USERNAME
 MyPASS="pw"       # PASSWORD
 MyHOST="localhost"          # Hostname
-IGGY="test psa" # these db's are skipped
 
+# If cleanup is set to "1", backups older than $OLDERTHAN days will be deleted!
+CLEANUP=1
+OLDERTHAN=365
+ 
 # Linux bin paths, change this if it can't be autodetected via which command
 MYSQL="$(which mysql)"
 MYSQLDUMP="$(which mysqldump)"
@@ -27,7 +30,7 @@ CHMOD="$(which chmod)"
 GZIP="$(which gzip)"
  
 # Backup Dest directory, change this if you have someother location
-DEST="/home/username/backup"
+DEST="/backup"
  
 # Main directory where backup will be stored
 MBD="$DEST/mysql"
@@ -36,15 +39,15 @@ MBD="$DEST/mysql"
 HOST="$(hostname)"
  
 # Get data in dd-mm-yyyy format
-NOW="$(date +"%d-%m-%Y")"
+NOW="$(date +"%Y-%m-%d")"
  
 # File to store current backup file
 FILE=""
 # Store list of databases
 DBS=""
  
-# DO NOT BACKUP these databases
-IGGY="test"
+# DO NOT BACKUP these databases (separate database names by space)
+IGGY=""
  
 [ ! -d $MBD ] && mkdir -p $MBD || :
  
@@ -67,10 +70,15 @@ do
     fi
  
     if [ "$skipdb" == "-1" ] ; then
-	FILE="$MBD/$db.$HOST.$NOW.gz"
-	# do all inone job in pipe,
-	# connect to mysql using mysqldump for select mysql database
-	# and pipe it out to gz file in backup dir :)
+	    FILE="$MBD/$db.$HOST.$NOW.gz"
+	    # do all inone job in pipe,
+	    # connect to mysql using mysqldump for select mysql database
+	    # and pipe it out to gz file in backup dir :)
         $MYSQLDUMP -u $MyUSER -h $MyHOST -p$MyPASS $db | $GZIP -9 > $FILE
     fi
 done
+
+if [ $CLEANUP == 1 ]; then
+    find $MBD/ -name "*.gz" -type f -mtime +$OLDERTHAN -delete
+fi
+
