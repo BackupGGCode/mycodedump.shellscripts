@@ -11,12 +11,13 @@
 # tar
 #
 # Changelog:
+# 2011-03-07 / Version 1.1 / introduced numbering of latest incremental
 # 2011-03-06 / Version 1.0 / initial release
 
 
 ### System Setup ###
 # all paths for the DIRS variable must be relative to the root (don't start with /)
-DIRS="/etc /backup/mysql/latest /var/www/vhosts"
+DIRS="etc backup/mysql/latest var/www/vhosts"
 BACKUPDIR="/backup/filesystem"
 # Directory, where a copy of the "latest" dumps will be stored
 LATEST=$BACKUPDIR/latest
@@ -53,12 +54,12 @@ fi
 
 if [ $DAY -eq $FULLBACKUP ]; then
   FILE="$HOST-full_$NOW.tar.gz"
-  $TAR -zcf $BACKUPDIR/$FILE $DIRS
+  $TAR -zcPf $BACKUPDIR/$FILE -C / $DIRS
   $CP $BACKUPDIR/$FILE "$LATEST/$HOST-full_latest.tar.gz"
 else
   FILE="$HOST-incremental_$NOW.tar.gz"
-  $TAR -g $INCFILE -zcf $BACKUPDIR/$FILE $DIRS
-  $CP $BACKUPDIR/$FILE "$LATEST/$HOST-incremental_latest.tar.gz"
+  $TAR -g $INCFILE -zcPf $BACKUPDIR/$FILE -C / $DIRS
+  $CP $BACKUPDIR/$FILE "$LATEST/$HOST-incremental_latest_$DAY.tar.gz"
 fi
 
 ### Find out if ftp backup failed or not ###

@@ -11,13 +11,12 @@
 # mail, ncftp
 #
 # Changelog:
+# 2011-03-07 / Version 0.2 / changed mput to put and delete uploaded files
 # 2011-03-06 / Version 0.1 / initial release
 
 
 ### System Setup ###
-DIR="/backup/mysql/latest/"
-FILE="/backup/filesystem/latest/localhost-full_latest.tar.gz"
-
+DIR="/backup/filesystem/latest/"
 
 ### FTP server Setup ###
 FTPD="/backup/"
@@ -49,7 +48,7 @@ $NCFTP -u"$FTPU" -p"$FTPP" $FTPS<<EOF
 mkdir $FTPD
 cd $FTPD
 lcd $DIR
-mput *
+put -DD *
 quit
 EOF
 
