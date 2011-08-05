@@ -11,8 +11,8 @@
 # mysql, mysqldump, chown, chmod, gzip
 #
 # Changelog:
-# 2011-03-06 / Version 1.0 / initial release
 # 2011-08-05 / Version 1.0.1 / Compatibility Update with new mysqldump version
+# 2011-03-06 / Version 1.0 / initial release
  
 MyUSER="user"       # USERNAME
 MyPASS="pw"         # PASSWORD
