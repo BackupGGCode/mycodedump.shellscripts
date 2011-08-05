@@ -1,7 +1,7 @@
 #!/bin/sh
 # Filesystem backup script
 #
-# Version: 1.0
+# Version: 1.1.1
 # Author: Reto Hugi (http://hugi.to/blog/)
 # License: GPL v3 (http://www.gnu.org/licenses/gpl.html)
 #
@@ -11,6 +11,7 @@
 # tar
 #
 # Changelog:
+# 2011-08-05 / Version 1.1.1 / fixed comparison syntax
 # 2011-03-07 / Version 1.1 / introduced numbering of latest incremental
 # 2011-03-06 / Version 1.0 / initial release
 
