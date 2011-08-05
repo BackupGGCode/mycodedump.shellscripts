@@ -1,7 +1,7 @@
 #!/bin/bash
 # Shell script to backup MySql databases
 #
-# Version: 1.0
+# Version: 1.0.1
 # Author: Reto Hugi (http://hugi.to/blog/)
 # License: GPL v3 (http://www.gnu.org/licenses/gpl.html)
 #
@@ -12,10 +12,11 @@
 #
 # Changelog:
 # 2011-03-06 / Version 1.0 / initial release
+# 2011-08-05 / Version 1.0.1 / Compatibility Update with new mysqldump version
  
-MyUSER="user"     # USERNAME
-MyPASS="pw"       # PASSWORD
-MyHOST="localhost"          # Hostnamee
+MyUSER="user"       # USERNAME
+MyPASS="pw"         # PASSWORD
+MyHOST="localhost"  # Hostname
 
 # If cleanup is set to "1", backups older than $OLDERTHAN days will be deleted!
 CLEANUP=1
@@ -77,7 +78,7 @@ fi
 #$CHMOD 0600 $DEST
  
 # Get a list of all databases available
-DBS="$($MYSQL -u $MyUSER -h $MyHOST -p$MyPASS -Bse 'show databases')"
+DBS="$($MYSQL -u$MyUSER -p$MyPASS -h $MyHOST -Bse 'show databases')"
 
 # start dumping databases
 for db in $DBS
@@ -96,7 +97,7 @@ do
 	    # do all in one job in pipe,
 	    # connect to mysql using mysqldump for select mysql database
 	    # and pipe it out to gz file in backup dir :)
-        $MYSQLDUMP -u $MyUSER -h $MyHOST -p$MyPASS $db | $GZIP -9 > $FILE
+        $MYSQLDUMP -u$MyUSER -p$MyPASS -h $MyHOST --single-transaction $db | $GZIP -9 > $FILE
         $CP $FILE "$LATEST/$db.$HOST.latest.gz"
     fi
 done
